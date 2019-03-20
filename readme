@@ -1,0 +1,9 @@
+The Hutter Prize is a contest for a compression algorithm which can best compress the first 10^8 bytes of a wikipedia text dump.
+
+In this repository, I attempt to beat this record in theory using a modern language model as a compression scheme. 
+
+I say "in theory" because contest entries need to be entirely self-contained so that the size of the decoder can be counted as part of the size of the compressed file. Obviously I'm not about to rewrite tensorflow in c++ just to make this happen.
+
+The current record sits at 15.28 million bytes by A. Rhatushnyak. I am currently testing a small transformer model with roughly 1.67 million parameters. Assuming that I can somehow round these parameters off to 16 bit floating point without losing significant performance, this leaves 11.94 million bytes. My dictionary takes up 40K bytes, and it might take another 100K bytes to store the code which runs the language model. This leaves me with 11.8 million bytes.
+
+I've encoded the original text using BPE with a vocabulary size of 10000, giving me just shy of 24 million symbols. This means I have need to store each symbol using no more than 3.93 bits or 2.72 nats on average. Some preliminary testing shows that my model gets stuck at around 4.4 nats per symbol right now, which is very far from good enough -- it corresponds to a total compression size of 22.5 million bytes.

@@ -1,0 +1,9 @@
+data/
+out/
+*~
+enwik8
+encoded
+encwords
+__pycache__/
+codes
+bpe
